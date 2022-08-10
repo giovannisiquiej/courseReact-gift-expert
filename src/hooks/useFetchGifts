@@ -1,0 +1,25 @@
+import { useState, useEffect} from 'react';
+import { getGifts } from '../helpers/getGifts';
+
+export const useFetchGifs = ( category) => {
+
+    const [images, setImages] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const getImages = async() => {
+        const newImages = await getGifts(category);
+        setImages(newImages);
+        setIsLoading(false);
+    }
+  
+    //el useEffect se usa para que no se ejecute la llamada en cualquier cambio del state
+    useEffect( () => {
+        getImages();
+    }, []  );
+
+    return {
+        images,
+        isLoading
+    }
+
+}
